@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Release.Name }}-job
+spec:
+  schedule: "0 1 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: {{ .Release.Name }}
+            image: "{{ .Values.bunny.image.repository }}:{{ .Values.bunny.image.tag }}"
+            imagePullPolicy: {{ .Values.bunny.image.pullPolicy }}
+            env:
+            - name: MONGODB_URI
+              value: mongodb://{{ .Release.Name }}-mongodb:27017/bunny
+            - name: IMAGE_DIR
+              value: /data
+            volumeMounts:
+              - name: data
+                mountPath: /data
+              - name: config
+                mountPath: /usr/src/app/config
+                readOnly: true
+            command:
+              - /bin/sh
+              - -c
+              - npm run image --prefix /usr/src/app && npm run site --prefix /usr/src/app
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: {{ .Release.Name }}-pv-claim
+            - name: config
+              secret:
+                secretName: {{ .Values.bunny.secret }}

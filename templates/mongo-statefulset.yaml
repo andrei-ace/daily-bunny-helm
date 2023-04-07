@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-mongodb
+spec:
+  serviceName: {{ .Release.Name }}-mongodb
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database
+  template:
+    metadata:
+      labels:
+        app: database
+        selector: mongodb
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo:4
+        ports:
+            - name: mongo
+              containerPort: 27017
+              protocol: TCP
+        volumeMounts:
+        - name: mongodb-data
+          mountPath: /data/db
+      volumes:
+      - name: mongodb-data
+        persistentVolumeClaim:
+          claimName: {{ .Release.Name }}-mongo-pv-claim

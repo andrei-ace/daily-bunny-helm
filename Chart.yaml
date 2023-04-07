@@ -1,0 +1,6 @@
+apiVersion: v2
+name: daily-bunny-helm
+description: Helm chart for daily bunny
+type: application
+version: 0.0.1
+appVersion: "0.0.1"

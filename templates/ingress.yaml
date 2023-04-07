@@ -1,0 +1,49 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: {{ .Values.ingress.certIssuer }}
+spec:
+  tls:
+  - hosts:
+    - bunny.bender-cloud.net
+    secretName: bunny-ingress-tls
+  - hosts:
+    - sweetbunny.fans
+    secretName: sweetbunny-ingress-tls
+  - hosts:
+    - www.sweetbunny.fans
+    secretName: www-sweetbunny-ingress-tls
+  
+  rules:
+    - host: bunny.bender-cloud.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-nginx
+                port:
+                  number: 80
+    - host: sweetbunny.fans
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-nginx
+                port:
+                  number: 80
+    - host: www.sweetbunny.fans
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-nginx
+                port:
+                  number: 80
