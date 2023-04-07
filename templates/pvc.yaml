@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-pv-claim
+  name: {{ .Release.Name }}-pv-claim-multi
 spec:
   accessModes:
-    - ReadWriteOnce
+    - {{ .Values.bunny.storage.accessMode }}
   volumeMode: Filesystem
   resources:
     requests:
-      storage: {{ .Values.storage.size }}
-  storageClassName: {{ .Values.storage.class }}
+      storage: {{ .Values.bunny.storage.size }}
+  storageClassName: {{ .Values.bunny.storage.class }}

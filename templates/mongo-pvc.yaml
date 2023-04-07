@@ -8,5 +8,5 @@ spec:
   volumeMode: Filesystem
   resources:
     requests:
-      storage: {{ .Values.storage.size }}
-  storageClassName: {{ .Values.storage.class }}
+      storage: {{ .Values.mongo.storage.size }}
+  storageClassName: {{ .Values.mongo.storage.class }}

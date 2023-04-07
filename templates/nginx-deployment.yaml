@@ -25,7 +25,9 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /usr/share/nginx/html/
+              readOnly: true
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-pv-claim
+            claimName: {{ .Release.Name }}-pv-claim-multi
+            readOnly: true

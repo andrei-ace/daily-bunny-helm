@@ -1,7 +1,3 @@
-storage:
-  size: 10Gi
-  class: local-path
-
 bunny:
   replicaCount: 1
   image:
@@ -9,12 +5,19 @@ bunny:
     tag: "1.0.2"
     pullPolicy: IfNotPresent
   secret: bunny-dotfile-secret
+  storage:
+    size: 2Gi
+    class: longhorn
+    accessMode: ReadWriteMany
 
 mongo:
   image:
     repository: mongo
     tag: "4"
     pullPolicy: IfNotPresent
+  storage:
+    size: 2Gi
+    class: local-path
 
 nginx:
   replicaCount: 3

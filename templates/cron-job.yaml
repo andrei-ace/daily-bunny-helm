@@ -31,7 +31,7 @@ spec:
           volumes:
             - name: data
               persistentVolumeClaim:
-                claimName: {{ .Release.Name }}-pv-claim
+                claimName: {{ .Release.Name }}-pv-claim-multi
             - name: config
               secret:
                 secretName: {{ .Values.bunny.secret }}
