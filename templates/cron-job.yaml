@@ -11,7 +11,7 @@ spec:
           restartPolicy: OnFailure
           containers:
           - name: {{ .Release.Name }}
-            image: "{{ .Values.bunny.image.repository }}:{{ .Values.bunny.image.tag }}"
+            image: "{{ .Values.bunny.image.repository }}:{{ .Chart.AppVersion }}"
             imagePullPolicy: {{ .Values.bunny.image.pullPolicy }}
             env:
             - name: MONGODB_URI
